@@ -3,7 +3,7 @@ import { PageContainer } from "@ant-design/pro-layout";
 import { Button, Card, Radio } from "antd";
 import Title from "antd/lib/typography/Title";
 import '../../models/counter';
-import { useModel } from 'umi';
+import { useModel, useRequest } from 'umi';
 import { sendMessage, SendMessageParams } from '@/services/test';
 
 
@@ -45,13 +45,35 @@ const CounterShow: React.FC = () => {
   );
 }
 
-const SubmitMessage = async (content: string) => {
-  const response = await sendMessage({ content: content } as SendMessageParams);
-  console.log(response);
+// 网络请求
 
+const SubmitMessage : React.FC = () => {
+  const { data, error, loading } = useRequest(() => {
+    return sendMessage({ content: '测试' } as SendMessageParams);
+  })
+
+  console.log(data);
+
+  if(loading){
+    return <div>加载中</div>
+  }
+
+  if(error){
+    return <div>{error}</div>
+  }
+
+  return (
+    <div>
+      <Title level={1}>{data}</Title>
+    </div>
+  );
 }
 
+
 export default (): React.ReactNode => {
+
+
+
   return (
     <PageContainer>
       <Card>
@@ -59,9 +81,7 @@ export default (): React.ReactNode => {
         <MessageType />
         <CounterButtonTest />
         <CounterShow></CounterShow>
-        <Button type='default' onClick={async () => {
-          SubmitMessage('测试消息')
-        }}>发送消息</Button>
+        <SubmitMessage></SubmitMessage>
       </Card>
     </PageContainer>
   );
