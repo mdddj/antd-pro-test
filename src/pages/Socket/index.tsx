@@ -5,7 +5,8 @@ import Title from "antd/lib/typography/Title";
 import '../../models/counter';
 import { useModel, useRequest } from 'umi';
 import { sendMessage, SendMessageParams } from '@/services/test';
-
+import FCTest from '@/pages/components/SFCCounter';
+import {FCSpreadAttributes} from '@/pages/components/SFAttributes';
 
 const MessageType: React.FC = () => (
   <>
@@ -70,6 +71,35 @@ const SubmitMessage : React.FC = () => {
 }
 
 
+// FC ----------
+type Props = {
+  label: string;
+  count: number;
+  onIncrement: () => void;
+};
+
+ export const FCCounter: React.FC<Props> = props => {
+  const { label, count, onIncrement } = props;
+
+  const handleIncrement = () => {
+    onIncrement();
+  };
+
+  return (
+    <div>
+      <Title level={1}>
+        {label}: {count}
+      </Title>
+      <Button type='primary' onClick={handleIncrement}>
+        {`加1`}
+      </Button>
+    </div>
+  );
+};
+
+
+
+
 export default (): React.ReactNode => {
 
 
@@ -81,7 +111,12 @@ export default (): React.ReactNode => {
         <MessageType />
         <CounterButtonTest />
         <CounterShow></CounterShow>
-        <SubmitMessage></SubmitMessage>
+        <FCTest></FCTest>
+        <FCSpreadAttributes
+          style={{backgroundColor:'grey'}}
+        >
+          {`你好，看看我的背景颜色变了吗？`}
+        </FCSpreadAttributes>
       </Card>
     </PageContainer>
   );
