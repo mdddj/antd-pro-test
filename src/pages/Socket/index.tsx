@@ -8,6 +8,7 @@ import { sendMessage, SendMessageParams } from '@/services/test';
 import FCTest from '@/pages/components/SFCCounter';
 import { FCSpreadAttributes } from '@/pages/components/SFAttributes';
 import { ClassCounter } from "../components/ClassComponent";
+import { DefaultProps } from "../components/DefaultProps";
 
 const MessageType: React.FC = () => (
   <>
@@ -119,6 +120,7 @@ export default (): React.ReactNode => {
           {`你好，看看我的背景颜色变了吗？`}
         </FCSpreadAttributes>
         <ClassCounter lable='class counter 例子'></ClassCounter>
+        <DefaultProps lable='带有默认参数的计数器'></DefaultProps>
       </Card>
     </PageContainer>
   );
