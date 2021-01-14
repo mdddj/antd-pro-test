@@ -6,7 +6,8 @@ import '../../models/counter';
 import { useModel, useRequest } from 'umi';
 import { sendMessage, SendMessageParams } from '@/services/test';
 import FCTest from '@/pages/components/SFCCounter';
-import {FCSpreadAttributes} from '@/pages/components/SFAttributes';
+import { FCSpreadAttributes } from '@/pages/components/SFAttributes';
+import { ClassCounter } from "../components/ClassComponent";
 
 const MessageType: React.FC = () => (
   <>
@@ -48,18 +49,18 @@ const CounterShow: React.FC = () => {
 
 // 网络请求
 
-const SubmitMessage : React.FC = () => {
+const SubmitMessage: React.FC = () => {
   const { data, error, loading } = useRequest(() => {
     return sendMessage({ content: '测试' } as SendMessageParams);
   })
 
   console.log(data);
 
-  if(loading){
+  if (loading) {
     return <div>加载中</div>
   }
 
-  if(error){
+  if (error) {
     return <div>{error}</div>
   }
 
@@ -78,7 +79,7 @@ type Props = {
   onIncrement: () => void;
 };
 
- export const FCCounter: React.FC<Props> = props => {
+export const FCCounter: React.FC<Props> = props => {
   const { label, count, onIncrement } = props;
 
   const handleIncrement = () => {
@@ -113,10 +114,11 @@ export default (): React.ReactNode => {
         <CounterShow></CounterShow>
         <FCTest></FCTest>
         <FCSpreadAttributes
-          style={{backgroundColor:'grey'}}
+          style={{ backgroundColor: 'grey' }}
         >
           {`你好，看看我的背景颜色变了吗？`}
         </FCSpreadAttributes>
+        <ClassCounter lable='class counter 例子'></ClassCounter>
       </Card>
     </PageContainer>
   );
