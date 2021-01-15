@@ -9,6 +9,16 @@ import FCTest from '@/pages/components/SFCCounter';
 import { FCSpreadAttributes } from '@/pages/components/SFAttributes';
 import { ClassCounter } from "../components/ClassComponent";
 import { DefaultProps } from "../components/DefaultProps";
+import { GenerList } from "../components/GenericListComponent";
+import { UserRender } from "../components/UserRender";
+import {User} from '@/pages/components/user';
+
+
+const users = [
+  new User(1,'小黄',24),
+  new User(2,'小洋',22),
+  new User(3,'小谢',25),
+]
 
 const MessageType: React.FC = () => (
   <>
@@ -104,8 +114,6 @@ export const FCCounter: React.FC<Props> = props => {
 
 export default (): React.ReactNode => {
 
-
-
   return (
     <PageContainer>
       <Card>
@@ -121,6 +129,10 @@ export default (): React.ReactNode => {
         </FCSpreadAttributes>
         <ClassCounter lable='class counter 例子'></ClassCounter>
         <DefaultProps lable='带有默认参数的计数器'></DefaultProps>
+        <GenerList
+          items ={users}
+          itemRenderer={(item)=><UserRender user={item}></UserRender>}
+        ></GenerList>
       </Card>
     </PageContainer>
   );
