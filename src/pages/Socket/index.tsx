@@ -1,23 +1,23 @@
 import React from "react";
-import { PageContainer } from "@ant-design/pro-layout";
-import { Button, Card, Radio } from "antd";
+import {PageContainer} from "@ant-design/pro-layout";
+import {Button, Card, message, Radio} from "antd";
 import Title from "antd/lib/typography/Title";
 import '../../models/counter';
-import { useModel, useRequest } from 'umi';
-import { sendMessage, SendMessageParams } from '@/services/test';
+import {useModel} from 'umi';
 import FCTest from '@/pages/components/SFCCounter';
-import { FCSpreadAttributes } from '@/pages/components/SFAttributes';
-import { ClassCounter } from "../components/ClassComponent";
-import { DefaultProps } from "../components/DefaultProps";
-import { GenerList } from "../components/GenericListComponent";
-import { UserRender } from "../components/UserRender";
+import {FCSpreadAttributes} from '@/pages/components/SFAttributes';
+import {ClassCounter} from "../components/ClassComponent";
+import {DefaultProps} from "../components/DefaultProps";
+import {GenerList} from "../components/GenericListComponent";
+import {UserRender} from "../components/UserRender";
 import {User} from '@/pages/components/user';
+import {sendMessage} from '@/services/test';
 
 
 const users = [
-  new User(1,'小黄',24),
-  new User(2,'小洋',22),
-  new User(3,'小谢',25),
+  new User(1, '小黄', 24),
+  new User(2, '小洋', 22),
+  new User(3, '小谢', 25),
 ]
 
 const MessageType: React.FC = () => (
@@ -28,6 +28,14 @@ const MessageType: React.FC = () => (
       <Radio.Button value="c">升级提示</Radio.Button>
       <Radio.Button value="d">上线提醒</Radio.Button>
     </Radio.Group>
+    <Card>
+      <Button onClick={async () => {
+        await sendMessageHandle('测试消息');
+      }}>
+        发送
+      </Button>
+    </Card>
+
   </>
 );
 
@@ -35,7 +43,7 @@ const MessageType: React.FC = () => (
 /// 操作按钮
 const CounterButtonTest: React.FC = () => {
 
-  const { add, min } = useModel("counter", (ret) => ({
+  const {add, min} = useModel("counter", (ret) => ({
     add: ret.increment,
     min: ret.decrement
   }));
@@ -59,30 +67,6 @@ const CounterShow: React.FC = () => {
 }
 
 // 网络请求
-
-const SubmitMessage: React.FC = () => {
-  const { data, error, loading } = useRequest(() => {
-    return sendMessage({ content: '测试' } as SendMessageParams);
-  })
-
-  console.log(data);
-
-  if (loading) {
-    return <div>加载中</div>
-  }
-
-  if (error) {
-    return <div>{error}</div>
-  }
-
-  return (
-    <div>
-      <Title level={1}>{data}</Title>
-    </div>
-  );
-}
-
-
 // FC ----------
 type Props = {
   label: string;
@@ -91,7 +75,7 @@ type Props = {
 };
 
 export const FCCounter: React.FC<Props> = props => {
-  const { label, count, onIncrement } = props;
+  const {label, count, onIncrement} = props;
 
   const handleIncrement = () => {
     onIncrement();
@@ -109,7 +93,12 @@ export const FCCounter: React.FC<Props> = props => {
   );
 };
 
-
+const sendMessageHandle = async (msg: string) => {
+  const hide = message.loading('正在发送');
+  await sendMessage({content: msg});
+  hide();
+  message.success('发送成功');
+}
 
 
 export default (): React.ReactNode => {
@@ -118,21 +107,21 @@ export default (): React.ReactNode => {
     <PageContainer>
       <Card>
         <Title level={1}>推送一条消息到平板</Title>
-        <MessageType />
-        <CounterButtonTest />
-        <CounterShow></CounterShow>
-        <FCTest></FCTest>
+        <MessageType/>
+        <CounterButtonTest/>
+        <CounterShow/>
+        <FCTest/>
         <FCSpreadAttributes
-          style={{ backgroundColor: 'grey' }}
+          style={{backgroundColor: 'grey'}}
         >
           {`你好，看看我的背景颜色变了吗？`}
         </FCSpreadAttributes>
-        <ClassCounter lable='class counter 例子'></ClassCounter>
-        <DefaultProps lable='带有默认参数的计数器'></DefaultProps>
+        <ClassCounter lable='class counter 例子'/>
+        <DefaultProps lable='带有默认参数的计数器'/>
         <GenerList
-          items ={users}
-          itemRenderer={(item)=><UserRender user={item}></UserRender>}
-        ></GenerList>
+          items={users}
+          itemRenderer={(item) => <UserRender user={item}/>}
+        />
       </Card>
     </PageContainer>
   );

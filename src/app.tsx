@@ -111,11 +111,14 @@ const errorHandler = (error: ResponseError) => {
 
 // 网络拦截器
 const authHandleInterceptors = (url: string, options: RequestOptionsInit) => {
-  const authHeader = { 'api-key-2': '9ADBE0B3033881F88EBD825BCF763B43' };
-  console.log('拦截器进来了');
+  // const authHeader = { 'api-key-2': '9ADBE0B3033881F88EBD825BCF763B43' };
+  options.headers = {
+    ...options.headers,
+    "api-key-2":"9ADBE0B3033881F88EBD825BCF763B43"
+  }
   return {
-    url: `${url}`,
-    options: { ...options, interceptors: true, headers: authHeader }
+    url,
+    options
   };
 }
 

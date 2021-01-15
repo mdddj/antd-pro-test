@@ -8,7 +8,7 @@
 export default {
   dev: {
     '/api/': {
-      target: 'http://192.168.199.63:8088/api/',
+      target: 'http://hlx.free.idcfengye.com/',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
@@ -22,7 +22,7 @@ export default {
   },
   pre: {
     '/api/': {
-      target: 'http://192.168.199.63:8088/api/',
+      target: 'http://hlx.free.idcfengye.com/api/',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },

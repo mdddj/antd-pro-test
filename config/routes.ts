@@ -26,6 +26,11 @@
     name: '消息推送',
     icon: 'smile',
     component: './Socket/index'
+  },{
+    path: '/message/push',
+    name: '在线消息推送',
+    icon: 'smile',
+    component: './Message/index'
   },
   {
     path: '/admin',
